@@ -6,7 +6,7 @@ function Popup(props) {
     <div className="popup">
       <div
         className={`popup__content ${
-          !title ? "popup__content_content_image" : ""
+          !title ? "popup__content_content-image" : ""
         }`}
       >
         <button

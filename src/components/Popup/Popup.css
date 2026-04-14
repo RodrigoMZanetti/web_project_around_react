@@ -107,8 +107,9 @@
 
 .popup__image {
   max-width: 100%;
-  object-fit: cover;
   cursor: pointer;
+  max-height: 75vh;
+  object-fit: contain;
 }
 
 .popup__caption {
@@ -156,7 +157,7 @@
     line-height: 22px;
   }
 
-  .popup__content_content_image {
+  . {
     max-width: 75vw;
     padding: 0;
   }
@@ -251,4 +252,8 @@
 .popup__avatar-image {
   margin-bottom: 0px;
   padding: 0px;
+}
+
+.popup__image-text {
+  color: white;
 }
