@@ -19,6 +19,32 @@ function Main() {
 
   const userObject = useContext(CurrentUserContext);
 
+  async function handleCardLike(card) {
+    const isLiked = card.likes.some((like) => like._id === userObject._id);
+
+    try {
+      const newCard = await api.changeLikeCardStatus(card._id, !isLiked);
+
+      setCards((state) =>
+        state.map((currentCard) =>
+          currentCard._id === card._id ? newCard : currentCard,
+        ),
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async function handleCardDelete(card) {
+    try {
+      await api.deleteCard(card._id);
+
+      setCards((state) => state.filter((c) => c._id !== card._id));
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   function handleClosePopup() {
     setPopup(null);
   }
@@ -79,6 +105,8 @@ function Main() {
                 key={card._id}
                 card={card}
                 handleOpenPopup={handleOpenPopup}
+                onCardLike={() => handleCardLike(card)}
+                onCardDelete={() => handleCardDelete(card)}
                 isLiked={isLiked}
               />
             );
