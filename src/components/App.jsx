@@ -6,7 +6,7 @@ import Footer from "./Footer.jsx";
 import Card from "./Main/Card.jsx";
 
 import api from "../utils/api.jsx";
-import { CurrentUserContext } from "./contexts/CurrentUserContext.jsx";
+import { CurrentUserContext } from "../contexts/CurrentUserContext.jsx";
 
 import Popup from "./Popup/Popup.jsx";
 import NewCard from "./Popup/NewCard.jsx";

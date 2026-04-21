@@ -1,6 +1,6 @@
 import ImagePopup from "./ImagePopup";
 import { useContext } from "react";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import "../../../blocks/cards.css";
 
 function Card(props) {
