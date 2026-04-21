@@ -1,4 +1,17 @@
+import { useState } from "react";
+
 function EditProfile() {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+
+  function handleName(e) {
+    setName(e.target.value);
+  }
+
+  function handleDescription(e) {
+    setDescription(e.target.value);
+  }
+
   return (
     <form
       id="edit-profile-form"
@@ -15,6 +28,8 @@ function EditProfile() {
           minLength="2"
           maxLength="40"
           id="profile-name"
+          value={name}
+          onChange={handleName}
           required
         />
         <span className="popup__input-error name-input-error"></span>
@@ -28,6 +43,8 @@ function EditProfile() {
           minLength="2"
           maxLength="200"
           id="description-profile"
+          value={description}
+          onChange={handleDescription}
           required
         />
         <span className="popup__input-error description-input-error"></span>
