@@ -1,9 +1,20 @@
-function NewCard() {
+import { useState } from "react";
+
+function NewCard({ handleAddPlaceSubmit }) {
+  const [name, setName] = useState("");
+  const [link, setLink] = useState("");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    handleAddPlaceSubmit({ name, link });
+  }
+
   return (
     <form
       className="popup__form"
       name="card-form"
       id="new-card-form"
+      onSubmit={handleSubmit}
       noValidate
     >
       <label className="popup__field">
@@ -16,6 +27,8 @@ function NewCard() {
           placeholder="Title"
           required
           type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
         <span className="popup__input-error card-name-input-error"></span>
       </label>
@@ -26,10 +39,12 @@ function NewCard() {
           placeholder="Image link"
           type="url"
           required
+          value={link}
+          onChange={(e) => setLink(e.target.value)}
         />
         <span className="popup__input-error url-input-error"></span>
       </label>
-      <button className="button popup__button" type="submit" disabled>
+      <button className="button popup__button" type="submit">
         Save
       </button>
     </form>

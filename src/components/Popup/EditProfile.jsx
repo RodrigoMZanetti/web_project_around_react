@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function EditProfile() {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
+  const userContext = useContext(CurrentUserContext);
+  const { currentUser, handleUpdateUser } = userContext;
+
+  const [name, setName] = useState(currentUser.name);
+  const [about, setDescription] = useState(currentUser.about);
 
   function handleName(e) {
     setName(e.target.value);
@@ -12,12 +16,19 @@ function EditProfile() {
     setDescription(e.target.value);
   }
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    handleUpdateUser({ name, about }); //
+  };
+
   return (
     <form
-      id="edit-profile-form"
       className="popup__form"
       name="profile-form"
+      id="edit-profile-form"
       noValidate
+      onSubmit={handleSubmit}
     >
       <label className="popup__field">
         <input
@@ -43,7 +54,7 @@ function EditProfile() {
           minLength="2"
           maxLength="200"
           id="description-profile"
-          value={description}
+          value={about}
           onChange={handleDescription}
           required
         />

@@ -156,11 +156,6 @@
     font-size: 18px;
     line-height: 22px;
   }
-
-  . {
-    max-width: 75vw;
-    padding: 0;
-  }
 }
 
 .popup__button:disabled {

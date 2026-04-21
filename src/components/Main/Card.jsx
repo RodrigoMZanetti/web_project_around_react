@@ -1,14 +1,23 @@
 import ImagePopup from "./ImagePopup";
+import { useContext } from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import "../../../blocks/cards.css";
 
 function Card(props) {
-  const { card, handleOpenPopup, onCardLike, onCardDelete, isLiked } = props;
+  const { currentUser } = useContext(CurrentUserContext);
+
+  const { card, handleOpenPopup, onCardLike, onCardDelete } = props;
   const { name, link } = card;
 
   const imageComponent = { title: null, children: <ImagePopup card={card} /> };
+  const isLiked = card.isLiked;
 
   const cardLikeButtonClassName = `card__like-button ${
     isLiked ? "card__like-button_is-active" : ""
   }`;
+  console.log(isLiked);
+  console.log("likes:", card.likes, "currentUser._id:", currentUser._id);
+  console.log("full card:", card);
 
   return (
     <li className="card">

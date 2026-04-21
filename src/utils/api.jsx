@@ -33,24 +33,24 @@ class API {
     return this._makeRequest(`cards/${cardId}/likes`, "DELETE");
   }
 
-  updateUserInfo(data) {
+  setUserInfo(data) {
     return this._makeRequest(`users/me`, "PATCH", {
       name: data.name,
-      about: data.description,
+      about: data.about,
     });
   }
 
-  createCard({ name, link }) {
+  addCard({ name, link }) {
     return this._makeRequest(`cards`, "POST", { name, link });
   }
 
-  createNewAvatar(data) {
+  setUserAvatar(data) {
     return this._makeRequest(`users/me/avatar`, "PATCH", {
       avatar: data.avatar,
     });
   }
 
-  createNewConfirmation(cardId) {
+  deleteCard(cardId) {
     return this._makeRequest(`cards/${cardId}`, "DELETE");
   }
 }

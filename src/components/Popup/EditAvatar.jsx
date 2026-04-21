@@ -1,9 +1,23 @@
-function EditAvatar() {
+import { useRef } from "react";
+
+function EditAvatar(props) {
+  const inputRef = useRef(null);
+  const { onUpdateAvatar } = props;
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    onUpdateAvatar({
+      avatar: inputRef.current.value,
+    });
+  }
+
   return (
     <form
       className="popup__avatar-form"
       name="popup__avatar-form"
       id="popup-avatar-form"
+      onSubmit={handleSubmit}
       noValidate
     >
       <label htmlFor="popup-avatar-image" className="popup__field">
@@ -13,6 +27,7 @@ function EditAvatar() {
           name="avatarImage"
           placeholder="paste a valid link"
           id="popup-avatar-image"
+          ref={inputRef}
           required
         />
       </label>

@@ -1,65 +1,10 @@
-import { useContext, useEffect, useState } from "react";
-
-import Popup from "../Popup/Popup.jsx";
-import NewCard from "../Popup/NewCard.jsx";
-import EditProfile from "../Popup/EditProfile.jsx";
-import EditAvatar from "../Popup/EditAvatar.jsx";
-import Card from "../Main/Card.jsx";
-import ImagePopup from "./ImagePopup.jsx";
-import api from "../../utils/api.jsx";
+import { useContext } from "react";
+import Card from "./Card.jsx";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.jsx";
 
-function Main() {
-  const [popup, setPopup] = useState(null);
-  const [cards, setCards] = useState([]);
-
-  const newCardPopup = { title: "New Card", children: <NewCard /> };
-  const newProfilePopup = { title: "New Profile", children: <EditProfile /> };
-  const newAvatarPopup = { title: "New Avatar", children: <EditAvatar /> };
-
-  const userObject = useContext(CurrentUserContext);
-
-  async function handleCardLike(card) {
-    const isLiked = card.likes.some((like) => like._id === userObject._id);
-
-    try {
-      const newCard = await api.changeLikeCardStatus(card._id, !isLiked);
-
-      setCards((state) =>
-        state.map((currentCard) =>
-          currentCard._id === card._id ? newCard : currentCard,
-        ),
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  async function handleCardDelete(card) {
-    try {
-      await api.deleteCard(card._id);
-
-      setCards((state) => state.filter((c) => c._id !== card._id));
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  function handleClosePopup() {
-    setPopup(null);
-  }
-
-  function handleOpenPopup(popup) {
-    setPopup(popup);
-  }
-
-  useEffect(() => {
-    async function fetchData() {
-      const cards = await api.getInitialCards();
-      setCards(cards);
-    }
-    fetchData();
-  }, []);
+function Main(props) {
+  const { currentUser } = useContext(CurrentUserContext);
+  const { onOpenPopup, newProfilePopup, newCardPopup, newAvatarPopup } = props;
 
   return (
     <main className="main">
@@ -67,57 +12,47 @@ function Main() {
         <div
           className="profile__avatar-container"
           id="profile-avatar-container"
-          onClick={() => handleOpenPopup(newAvatarPopup)}
+          onClick={() => onOpenPopup(newAvatarPopup)}
         >
           <img
             className="profile__image"
-            src={userObject?.avatar}
+            src={currentUser?.avatar}
             alt="Avatar"
           />
           <div className="profile__overlay"></div>
         </div>
         <div className="profile__info">
-          <h1 className="profile__title">{userObject?.name}</h1>
+          <h1 className="profile__title">{currentUser?.name}</h1>
           <button
             aria-label="Edit profile"
             className="profile__edit-button"
             type="button"
-            onClick={() => handleOpenPopup(newProfilePopup)}
+            onClick={() => onOpenPopup(newProfilePopup)}
           ></button>
-          <p className="profile__description">{userObject?.about}</p>
+          <p className="profile__description">{currentUser?.about}</p>
         </div>
         <button
           aria-label="Add Card"
           className="profile__add-button"
           type="button"
-          onClick={() => handleOpenPopup(newCardPopup)}
+          onClick={() => onOpenPopup(newCardPopup)}
         ></button>
       </section>
       <section className="cards page__section">
         <ul className="cards__list">
-          {cards.map((card) => {
-            const isLiked =
-              card.likes && userObject
-                ? card.likes.some((like) => like._id === userObject._id)
-                : false;
+          {props.cards.map((card) => {
             return (
               <Card
                 key={card._id}
                 card={card}
-                handleOpenPopup={handleOpenPopup}
-                onCardLike={() => handleCardLike(card)}
-                onCardDelete={() => handleCardDelete(card)}
-                isLiked={isLiked}
+                onCardLike={() => props.onCardLike(card)}
+                onCardDelete={() => props.onCardDelete(card)}
+                handleOpenPopup={onOpenPopup}
               />
             );
           })}
         </ul>
       </section>
-      {popup && (
-        <Popup onClose={handleClosePopup} title={popup.title}>
-          {popup.children}
-        </Popup>
-      )}
     </main>
   );
 }
