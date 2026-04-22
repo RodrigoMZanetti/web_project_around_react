@@ -1,10 +1,18 @@
 import { useContext } from "react";
 import Card from "./Card.jsx";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import Popup from "../Popup/Popup.jsx";
 
 function Main(props) {
   const { currentUser } = useContext(CurrentUserContext);
-  const { onOpenPopup, newProfilePopup, newCardPopup, newAvatarPopup } = props;
+  const {
+    onOpenPopup,
+    onClosePopup,
+    popup,
+    newProfilePopup,
+    newCardPopup,
+    newAvatarPopup,
+  } = props;
 
   return (
     <main className="main">
@@ -53,6 +61,11 @@ function Main(props) {
           })}
         </ul>
       </section>
+      {popup && (
+        <Popup onClose={onClosePopup} title={popup.title}>
+          {popup.children}
+        </Popup>
+      )}
     </main>
   );
 }

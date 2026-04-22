@@ -124,6 +124,8 @@ function App() {
           {currentUser && (
             <Main
               onOpenPopup={handleOpenPopup}
+              onClosePopup={handleClosePopup}
+              popup={popup}
               newProfilePopup={newProfilePopup}
               newCardPopup={newCardPopup}
               newAvatarPopup={newAvatarPopup}
@@ -133,11 +135,6 @@ function App() {
             />
           )}
           <Footer />
-          {popup && (
-            <Popup onClose={handleClosePopup} title={popup.title}>
-              {popup.children}
-            </Popup>
-          )}
         </div>
       </CurrentUserContext.Provider>
     </>
