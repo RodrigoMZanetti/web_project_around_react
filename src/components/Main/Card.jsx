@@ -10,14 +10,13 @@ function Card(props) {
   const { name, link } = card;
 
   const imageComponent = { title: null, children: <ImagePopup card={card} /> };
-  const isLiked = card.isLiked;
+
+  const isLiked =
+    card.likes?.some((user) => user._id === currentUser._id) ?? false;
 
   const cardLikeButtonClassName = `card__like-button ${
     isLiked ? "card__like-button_is-active" : ""
   }`;
-  console.log(isLiked);
-  console.log("likes:", card.likes, "currentUser._id:", currentUser._id);
-  console.log("full card:", card);
 
   return (
     <li className="card">
@@ -31,7 +30,7 @@ function Card(props) {
         aria-label="Delete card"
         className="card__delete-button"
         type="button"
-        onClick={onCardDelete}
+        onClick={() => onCardDelete(card)}
       />
       <div className="card__description">
         <h2 className="card__title">{name}</h2>
@@ -39,7 +38,7 @@ function Card(props) {
           aria-label="Like card"
           type="button"
           className={cardLikeButtonClassName}
-          onClick={onCardLike}
+          onClick={() => onCardLike(card)}
         />
       </div>
     </li>

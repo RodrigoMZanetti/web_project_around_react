@@ -7,6 +7,8 @@ function NewCard({ handleAddPlaceSubmit }) {
   function handleSubmit(e) {
     e.preventDefault();
     handleAddPlaceSubmit({ name, link });
+    setName("");
+    setLink("");
   }
 
   return (

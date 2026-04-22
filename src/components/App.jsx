@@ -16,18 +16,8 @@ import EditAvatar from "./Popup/EditAvatar.jsx";
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [cards, setCards] = useState([]);
-
   const [popup, setPopup] = useState(null);
-  const newCardPopup = {
-    title: "New Card",
-    children: <NewCard handleAddPlaceSubmit={handleAddPlaceSubmit} />,
-  };
-  const newProfilePopup = { title: "New Profile", children: <EditProfile /> };
-  const newAvatarPopup = {
-    title: "New Avatar",
-    children: <EditAvatar onUpdateAvatar={handleUpdateAvatar} />,
-  };
-
+  console.log("popup state:", popup);
   async function handleCardLike(card) {
     const isLiked = card.isLiked;
 
@@ -56,29 +46,12 @@ function App() {
     }
   }
 
-  useEffect(() => {
-    async function fetchData() {
-      const cards = await api.getInitialCards();
-      setCards(cards);
-    }
-    fetchData();
-  }, []);
-
   function handleClosePopup() {
     setPopup(null);
   }
-
   function handleOpenPopup(popup) {
     setPopup(popup);
   }
-
-  useEffect(() => {
-    async function fetchData() {
-      const currentUser = await api.getUserInfo();
-      setCurrentUser(currentUser);
-    }
-    fetchData();
-  }, []);
 
   function handleUpdateUser(data) {
     (async () => {
@@ -88,7 +61,6 @@ function App() {
       });
     })();
   }
-
   async function handleUpdateAvatar(data) {
     try {
       const newData = await api.setUserAvatar(data);
@@ -110,6 +82,37 @@ function App() {
       console.error(error);
     }
   }
+
+  ////////////////////////////////////////////////
+
+  const newCardPopup = {
+    title: "New Card",
+    children: <NewCard handleAddPlaceSubmit={handleAddPlaceSubmit} />,
+  };
+
+  const newProfilePopup = { title: "New Profile", children: <EditProfile /> };
+
+  const newAvatarPopup = {
+    title: "New Avatar",
+    children: <EditAvatar onUpdateAvatar={handleUpdateAvatar} />,
+  };
+  //////////////////////////////////////
+
+  useEffect(() => {
+    async function fetchData() {
+      const cards = await api.getInitialCards();
+      setCards(cards);
+    }
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    async function fetchData() {
+      const currentUser = await api.getUserInfo();
+      setCurrentUser(currentUser);
+    }
+    fetchData();
+  }, []);
 
   return (
     <>

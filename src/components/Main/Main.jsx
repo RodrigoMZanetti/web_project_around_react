@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import Card from "./Card.jsx";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import Popup from "../Popup/Popup.jsx";
 
 function Main(props) {
   const { currentUser } = useContext(CurrentUserContext);
@@ -54,7 +53,6 @@ function Main(props) {
           })}
         </ul>
       </section>
-      <Popup />
     </main>
   );
 }
