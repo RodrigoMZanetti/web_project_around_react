@@ -5,7 +5,7 @@ import Main from "./Main/Main.jsx";
 import Footer from "./Footer.jsx";
 import Card from "./Main/Card.jsx";
 
-import api from "../utils/api.jsx";
+import api from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 import Popup from "./Popup/Popup.jsx";
@@ -13,11 +13,14 @@ import NewCard from "./Popup/NewCard.jsx";
 import EditProfile from "./Popup/EditProfile.jsx";
 import EditAvatar from "./Popup/EditAvatar.jsx";
 
+import "../../blocks/cards.css";
+
 function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [cards, setCards] = useState([]);
   const [popup, setPopup] = useState(null);
-  console.log("popup state:", popup);
+  ("popup state:", popup);
+
   async function handleCardLike(card) {
     const isLiked = card.isLiked;
 
@@ -101,6 +104,7 @@ function App() {
   useEffect(() => {
     async function fetchData() {
       const cards = await api.getInitialCards();
+
       setCards(cards);
     }
     fetchData();
